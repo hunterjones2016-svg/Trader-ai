@@ -1,0 +1,60 @@
+{
+  "name": "TRADER AI - Real-time Trading Analysis",
+  "short_name": "TRADER AI",
+  "description": "Real-time multi-asset trading analysis with AI-powered signals for stocks, crypto, forex, and commodities",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#111827",
+  "background_color": "#030712",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23111827' width='192' height='192'/><text x='50%' y='50%' font-size='80' font-weight='bold' fill='%2310b981' text-anchor='middle' dominant-baseline='middle'>⚡</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%23111827' width='512' height='512'/><text x='50%' y='50%' font-size='250' font-weight='bold' fill='%2310b981' text-anchor='middle' dominant-baseline='middle'>⚡</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23030712' width='540' height='720'/><rect fill='%231f2937' x='0' y='0' width='540' height='100'/><text x='270' y='60' font-size='32' font-weight='bold' fill='%2310b981' text-anchor='middle' dominant-baseline='middle'>TRADER AI</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Bitcoin",
+      "short_name": "BTC",
+      "description": "Analyze Bitcoin trading signals",
+      "url": "/?asset=BTC",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23111827' width='192' height='192' rx='40'/><text x='50%' y='50%' font-size='80' font-weight='bold' fill='%23F7931A' text-anchor='middle' dominant-baseline='middle'>₿</text></svg>",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Ethereum",
+      "short_name": "ETH",
+      "description": "Analyze Ethereum trading signals",
+      "url": "/?asset=ETH",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23111827' width='192' height='192' rx='40'/><text x='50%' y='50%' font-size='80' font-weight='bold' fill='%23627EEA' text-anchor='middle' dominant-baseline='middle'>◆</text></svg>",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
