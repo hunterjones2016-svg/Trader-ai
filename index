@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111827">
+    <meta name="description" content="TRADER AI - Real-time Multi-Asset Trading Analysis with AI Signals">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TRADER AI">
+    
+    <link rel="manifest" href="manifest.json">
+    <title>TRADER AI - Trading Dashboard</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #030712, #111827, #030712);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            border-bottom: 1px solid #374151;
+            background: rgba(17, 24, 39, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-title .icon {
+            font-size: 32px;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 24px;
+        }
+
+        .max-width {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .asset-btn {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #1f2937;
+            color: #d1d5db;
+        }
+
+        .asset-btn:hover {
+            background: #374151;
+        }
+
+        .asset-btn.active {
+            background: #10b981;
+            color: white;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-section {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 1024px) {
+            .chart-section {
+                grid-column: span 1;
+            }
+        }
+
+        .card {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .price-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .price-change {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .price-change.positive {
+            color: #10b981;
+        }
+
+        .price-change.negative {
+            color: #ef4444;
+        }
+
+        .price-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 320px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 4px;
+            padding: 20px 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #10b981, #6ee7b7);
+            border-radius: 4px 4px 0 0;
+            opacity: 0.7;
+            min-height: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .chart-bar:hover {
+            opacity: 1;
+        }
+
+        .signal-item {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .signal-item.buy {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #059669;
+        }
+
+        .signal-item.sell {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #dc2626;
+        }
+
+        .signal-item.watch {
+            background: rgba(202, 138, 4, 0.1);
+            border-color: #b45309;
+        }
+
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .signal-text {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .signal-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .signal-badge.buy {
+            background: #10b981;
+        }
+
+        .signal-badge.sell {
+            background: #ef4444;
+        }
+
+        .signal-badge.watch {
+            background: #ca8a04;
+        }
+
+        .signal-confidence {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .analysis-box {
+            background: rgba(31, 41, 55, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #d1d5db;
+        }
+
+        .warning-box {
+            background: rgba(234, 88, 12, 0.1);
+            border: 1px solid #b45309;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .warning-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            color: #fed7aa;
+        }
+
+        .warning-text strong {
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #374151;
+            border-top: 4px solid #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-signals {
+            color: #9ca3af;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <span class="icon">⚡</span>
+                <span>TRADER AI</span>
+            </div>
+            <div class="header-subtitle">Real-time Multi-Asset Analysis</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="max-width">
+            <div class="assets-grid" id="assetsGrid"></div>
+
+            <div class="main-grid">
+                <div class="chart-section">
+                    <div class="card" style="margin-bottom: 24​​​​​​​​​​​​​​​​
